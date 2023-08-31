@@ -11,12 +11,22 @@ export const FunctionalApp = () => {
     city: '',
     phone: '',
   });
+  const [rawData, setRawData] = useState({
+    firstName: '',
+    lastName: '',
+    email: '',
+    city: '',
+    phone1: '',
+    phone2: '',
+    phone3: '',
+    phone4: '',
+  });
 
   return (
     <>
       <h2>Functional</h2>
       <ProfileInformation userData={userData} />
-      <FunctionalForm setUserData={setUserData} />
+      <FunctionalForm setRawData={setRawData} />
       <PhoneInput />
     </>
   );

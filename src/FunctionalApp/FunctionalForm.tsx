@@ -10,23 +10,22 @@ const emailErrorMessage = 'Email is Invalid';
 const cityErrorMessage = 'State is Invalid';
 const phoneNumberErrorMessage = 'Invalid Phone Number';
 
-type UserData = {
+type RawData = {
   firstName: string;
   lastName: string;
   email: string;
   city: string;
-  phone: string;
+  phone1: string;
+  phone2: string;
+  phone3: string;
+  phone4: string;
 };
 
 type FormProps = {
-  userData: UserData;
-  setUserData: React.Dispatch<React.SetStateAction<UserData>>;
+  setRawData: React.Dispatch<React.SetStateAction<RawData>>;
 };
 
-export const FunctionalForm: React.FC<FormProps> = ({
-  setUserData,
-  userData,
-}) => {
+export const FunctionalForm: React.FC<FormProps> = ({ setRawData }) => {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [phoneInputState, setPhoneInputState] = useState(['', '', '']);
   const initialFormInputs = {
@@ -34,7 +33,10 @@ export const FunctionalForm: React.FC<FormProps> = ({
     lastName: '',
     email: '',
     city: '',
-    phone: '',
+    phone1: '',
+    phone2: '',
+    phone3: '',
+    phone4: '',
   };
 
   const [formInputs, setFormInputs] = useState(initialFormInputs);
@@ -52,7 +54,9 @@ export const FunctionalForm: React.FC<FormProps> = ({
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormInputs({ ...formInputs, [e.target.name]: e.target.value });
   };
-
+  /*  const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFormInputs({ ...formInputs, phone: formInputs.phone + e.target });
+  }; */
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -69,7 +73,8 @@ export const FunctionalForm: React.FC<FormProps> = ({
       alert('bad data');
       return;
     } else {
-      setUserData(formInputs);
+      setRawData(formInputs);
+      console.log(formInputs);
       setFormInputs(initialFormInputs);
       setIsSubmitted(false);
     }
@@ -144,13 +149,40 @@ export const FunctionalForm: React.FC<FormProps> = ({
       <div className="input-wrap">
         <label htmlFor="phone">Phone:</label>
         <div id="phone-input-wrap">
-          <input type="text" id="phone-input-1" placeholder="55" />
+          <input
+            name="phone1"
+            type="text"
+            id="phone-input-1"
+            placeholder="55"
+            value={formInputs.phone1}
+            onChange={handleChange}
+          />
           -
-          <input type="text" id="phone-input-2" placeholder="55" />
+          <input
+            name="phone2"
+            type="text"
+            id="phone-input-2"
+            placeholder="55"
+            value={formInputs.phone2}
+            onChange={handleChange}
+          />
           -
-          <input type="text" id="phone-input-3" placeholder="55" />
-          -
-          <input type="text" id="phone-input-4" placeholder="5" />
+          <input
+            name="phone3"
+            type="text"
+            id="phone-input-3"
+            placeholder="55"
+            value={formInputs.phone3}
+            onChange={handleChange}
+          />
+          <input
+            name="phone4"
+            type="text"
+            id="phone-input-4"
+            placeholder="5"
+            value={formInputs.phone4}
+            onChange={handleChange}
+          />
         </div>
       </div>
 

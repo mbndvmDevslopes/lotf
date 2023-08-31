@@ -27,13 +27,13 @@ export const PhoneInput = () => {
       const shouldGoToNextRef =
         currentMaxLength === value.length && nextRef?.current;
       const shouldGoToPrevRef = value.length === 0;
-
+      console.log(nextRef?.current);
       const newState = phoneInputState.map((phoneInput, phoneInputIndex) =>
         index === phoneInputIndex ? e.target.value : phoneInput
       ) as PhoneInputState;
       setPhoneInputState(newState);
       if (shouldGoToNextRef) {
-        nextRef.current?.focus();
+        nextRef?.current?.focus();
       }
       if (shouldGoToPrevRef) {
         prevRef?.current?.focus();
@@ -44,35 +44,36 @@ export const PhoneInput = () => {
     <div>
       <input
         type="text"
-        name=""
-        id=""
+        name="1"
+        id="phone-input-1"
         value={phoneInputState[0]}
         onChange={createOnChangeHandler(0)}
         ref={ref0}
       />
       <input
         type="text"
-        name=""
-        id=""
+        name="2"
+        id="phone-input-2"
         value={phoneInputState[1]}
         onChange={createOnChangeHandler(1)}
         ref={ref1}
       />
       <input
         type="text"
-        name=""
-        id=""
+        name="3"
+        id="phone-input-3"
         value={phoneInputState[2]}
         onChange={createOnChangeHandler(2)}
         ref={ref2}
       />
       <input
         type="text"
-        name=""
-        id=""
+        name="4"
+        id="phone-input-4"
         value={phoneInputState[3]}
         onChange={createOnChangeHandler(3)}
         ref={ref3}
+        maxLength={1}
       />
     </div>
   );
