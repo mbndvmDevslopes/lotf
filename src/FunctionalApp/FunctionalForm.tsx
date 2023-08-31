@@ -1,7 +1,6 @@
-import { HTMLAttributes, useState } from 'react';
+import { useState } from 'react';
 
 import { ErrorMessage } from '../ErrorMessage';
-/*import { isNameValid } from '../utils/nameValidator';*/
 import { isEmailValid, isNameValid, isCityValid } from '../utils/validations';
 import { allCities } from '../utils/all-cities';
 
@@ -29,7 +28,7 @@ export const FunctionalForm: React.FC<FormProps> = ({
   userData,
 }) => {
   const [isSubmitted, setIsSubmitted] = useState(false);
-
+  const [phoneInputState, setPhoneInputState] = useState(['', '', '']);
   const initialFormInputs = {
     firstName: '',
     lastName: '',
@@ -40,12 +39,10 @@ export const FunctionalForm: React.FC<FormProps> = ({
 
   const [formInputs, setFormInputs] = useState(initialFormInputs);
 
-
   const isFirstNameInputValid = isNameValid(formInputs.firstName);
   const isLastNameInputValid = isNameValid(formInputs.lastName);
   const validEmail = isEmailValid(formInputs.email);
   const cityNotBlank = isCityValid(formInputs.city);
-  console.log('city is valid', isCityValid(formInputs.city));
 
   const shouldShowFirstNameError = !isFirstNameInputValid && isSubmitted;
   const shouldShowLastNameError = !isLastNameInputValid && isSubmitted;
@@ -59,12 +56,24 @@ export const FunctionalForm: React.FC<FormProps> = ({
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    setUserData(formInputs);
-
     setIsSubmitted(true);
-    setFormInputs(initialFormInputs);
+    dataValidation();
   };
-
+  const dataValidation = () => {
+    if (
+      !isFirstNameInputValid ||
+      !isLastNameInputValid ||
+      !validEmail ||
+      !cityNotBlank
+    ) {
+      alert('bad data');
+      return;
+    } else {
+      setUserData(formInputs);
+      setFormInputs(initialFormInputs);
+      setIsSubmitted(false);
+    }
+  };
   return (
     <form>
       <u>
@@ -115,7 +124,6 @@ export const FunctionalForm: React.FC<FormProps> = ({
 
       {/* City Input */}
       <div className="input-wrap">
-        cityNotBlank
         <label>{'City'}:</label>
         <input
           placeholder="Hobbiton"
