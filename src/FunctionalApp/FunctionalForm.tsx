@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import { PhoneInputState } from '../types';
+import { PhoneInputState, UserInformation } from '../types';
 
 import { FunctionTextInput } from './FunctionTextInput';
 import { PhoneInput } from './PhoneInput';
@@ -15,16 +15,16 @@ const emailErrorMessage = 'Email is Invalid';
 const cityErrorMessage = 'State is Invalid';
 const phoneNumberErrorMessage = 'Invalid Phone Number';
 
-type UserData = {
+/* type UserData = {
   firstName: string;
   lastName: string;
   email: string;
   city: string;
   phone: string;
-};
+}; */
 
 type FormProps = {
-  setUserData: React.Dispatch<React.SetStateAction<UserData>>;
+  setUserData: React.Dispatch<React.SetStateAction<UserInformation>>;
 };
 
 export const FunctionalForm: React.FC<FormProps> = ({ setUserData }) => {
@@ -45,8 +45,13 @@ export const FunctionalForm: React.FC<FormProps> = ({ setUserData }) => {
 
   const [formInputs, setFormInputs] = useState(initialFormInputs);
 
-  const isFirstNameInputValid = isNameValid(formInputs.firstName);
-  const isLastNameInputValid = isNameValid(formInputs.lastName);
+  /*  const isFirstNameInputValid = isNameValid(formInputs.firstName);
+  const isLastNameInputValid = isNameValid(formInputs.lastName); */
+  const [isFirstNameInputValid, isLastNameInputValid] = [
+    formInputs.firstName,
+    formInputs.lastName,
+  ].map(isNameValid);
+
   const validEmail = isEmailValid(formInputs.email);
   const cityNotBlank = isCityValid(formInputs.city);
   const validPhoneNumber = isPhoneNumberValid(phoneInputState);
@@ -91,7 +96,6 @@ export const FunctionalForm: React.FC<FormProps> = ({ setUserData }) => {
       console.log(formInputs);
       /* setFormInputs(initialFormInputs);
       setIsSubmitted(false); */
-      console.log(phoneInputState);
       resetForm();
     }
   };
