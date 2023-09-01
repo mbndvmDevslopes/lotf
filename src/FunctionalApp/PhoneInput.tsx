@@ -1,15 +1,17 @@
-import React, { useState, useRef, ChangeEventHandler } from 'react';
+import React, { useRef, ChangeEventHandler } from 'react';
 
-export type PhoneInputState = [string, string, string, string];
+//export type PhoneInputState = [string, string, string, string];
+import { PhoneInputState } from '../types';
 
-export const PhoneInput = () => {
-  const [phoneInputState, setPhoneInputState] = useState<PhoneInputState>([
-    '',
-    '',
-    '',
-    '',
-  ]);
+type FormProps = {
+  phoneInputState: PhoneInputState;
+  setPhoneInputState: React.Dispatch<React.SetStateAction<PhoneInputState>>;
+};
 
+export const PhoneInput: React.FC<FormProps> = ({
+  setPhoneInputState,
+  phoneInputState,
+}) => {
   const ref0 = useRef<HTMLInputElement>(null);
   const ref1 = useRef<HTMLInputElement>(null);
   const ref2 = useRef<HTMLInputElement>(null);
@@ -27,9 +29,11 @@ export const PhoneInput = () => {
       const shouldGoToNextRef =
         currentMaxLength === value.length && nextRef?.current;
       const shouldGoToPrevRef = value.length === 0;
-      console.log(nextRef?.current);
+
       const newState = phoneInputState.map((phoneInput, phoneInputIndex) =>
-        index === phoneInputIndex ? e.target.value : phoneInput
+        index === phoneInputIndex
+          ? e.target.value.replace(/\D/g, '').slice(0, currentMaxLength) //allow only digits and limit typing length to lengths array
+          : phoneInput
       ) as PhoneInputState;
       setPhoneInputState(newState);
       if (shouldGoToNextRef) {
@@ -41,40 +45,45 @@ export const PhoneInput = () => {
     };
 
   return (
-    <div>
-      <input
-        type="text"
-        name="1"
-        id="phone-input-1"
-        value={phoneInputState[0]}
-        onChange={createOnChangeHandler(0)}
-        ref={ref0}
-      />
-      <input
-        type="text"
-        name="2"
-        id="phone-input-2"
-        value={phoneInputState[1]}
-        onChange={createOnChangeHandler(1)}
-        ref={ref1}
-      />
-      <input
-        type="text"
-        name="3"
-        id="phone-input-3"
-        value={phoneInputState[2]}
-        onChange={createOnChangeHandler(2)}
-        ref={ref2}
-      />
-      <input
-        type="text"
-        name="4"
-        id="phone-input-4"
-        value={phoneInputState[3]}
-        onChange={createOnChangeHandler(3)}
-        ref={ref3}
-        maxLength={1}
-      />
+    <div className="input-wrap">
+      <label htmlFor="phone">Phone:</label>
+      <div id="phone-input-wrap">
+        <input
+          type="text"
+          name="1"
+          id="phone-input-1"
+          value={phoneInputState[0]}
+          onChange={createOnChangeHandler(0)}
+          ref={ref0}
+        />
+        -
+        <input
+          type="text"
+          name="2"
+          id="phone-input-2"
+          value={phoneInputState[1]}
+          onChange={createOnChangeHandler(1)}
+          ref={ref1}
+        />
+        -
+        <input
+          type="text"
+          name="3"
+          id="phone-input-3"
+          value={phoneInputState[2]}
+          onChange={createOnChangeHandler(2)}
+          ref={ref2}
+        />
+        -
+        <input
+          type="text"
+          name="4"
+          id="phone-input-4"
+          value={phoneInputState[3]}
+          onChange={createOnChangeHandler(3)}
+          ref={ref3}
+        />
+      </div>
     </div>
   );
 };

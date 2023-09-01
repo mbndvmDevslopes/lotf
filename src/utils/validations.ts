@@ -14,5 +14,10 @@ export const isNameValid = (name:string):boolean => {
  
 
 export const isCityValid = (city: string):boolean => {
-    return city.trim() !== '' && allCities.includes(city)
+    const lowerCaseAllCities = allCities.map((city)=> city.toLocaleLowerCase())
+    return city.trim() !== '' && lowerCaseAllCities.includes(city.toLowerCase())
+}
+
+export const isPhoneNumberValid =(phoneNumberArray:[string, string, string, string]) => {
+    return phoneNumberArray.every((phoneElement:string) => phoneElement !=="")
 }

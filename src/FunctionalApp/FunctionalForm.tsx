@@ -1,8 +1,13 @@
 import { useState } from 'react';
 
+import { PhoneInputState } from '../types';
+
+import { FunctionTextInput } from './FunctionTextInput';
+import { PhoneInput } from './PhoneInput';
 import { ErrorMessage } from '../ErrorMessage';
 import { isEmailValid, isNameValid, isCityValid } from '../utils/validations';
 import { allCities } from '../utils/all-cities';
+import { isPhoneNumberValid } from '../utils/validations';
 
 const firstNameErrorMessage = 'First name must be at least 2 characters long';
 const lastNameErrorMessage = 'Last name must be at least 2 characters long';
@@ -10,33 +15,32 @@ const emailErrorMessage = 'Email is Invalid';
 const cityErrorMessage = 'State is Invalid';
 const phoneNumberErrorMessage = 'Invalid Phone Number';
 
-type RawData = {
+type UserData = {
   firstName: string;
   lastName: string;
   email: string;
   city: string;
-  phone1: string;
-  phone2: string;
-  phone3: string;
-  phone4: string;
+  phone: string;
 };
 
 type FormProps = {
-  setRawData: React.Dispatch<React.SetStateAction<RawData>>;
+  setUserData: React.Dispatch<React.SetStateAction<UserData>>;
 };
 
-export const FunctionalForm: React.FC<FormProps> = ({ setRawData }) => {
+export const FunctionalForm: React.FC<FormProps> = ({ setUserData }) => {
   const [isSubmitted, setIsSubmitted] = useState(false);
-  const [phoneInputState, setPhoneInputState] = useState(['', '', '']);
+  const [phoneInputState, setPhoneInputState] = useState<PhoneInputState>([
+    '',
+    '',
+    '',
+    '',
+  ]);
   const initialFormInputs = {
     firstName: '',
     lastName: '',
     email: '',
     city: '',
-    phone1: '',
-    phone2: '',
-    phone3: '',
-    phone4: '',
+    phone: '',
   };
 
   const [formInputs, setFormInputs] = useState(initialFormInputs);
@@ -45,18 +49,22 @@ export const FunctionalForm: React.FC<FormProps> = ({ setRawData }) => {
   const isLastNameInputValid = isNameValid(formInputs.lastName);
   const validEmail = isEmailValid(formInputs.email);
   const cityNotBlank = isCityValid(formInputs.city);
+  const validPhoneNumber = isPhoneNumberValid(phoneInputState);
 
   const shouldShowFirstNameError = !isFirstNameInputValid && isSubmitted;
   const shouldShowLastNameError = !isLastNameInputValid && isSubmitted;
   const shouldShowEmailError = !validEmail && isSubmitted;
   const shouldShowCityError = !cityNotBlank && isSubmitted;
+  const shouldShowPhoneNumberError = !validPhoneNumber && isSubmitted;
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormInputs({ ...formInputs, [e.target.name]: e.target.value });
   };
-  /*  const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormInputs({ ...formInputs, phone: formInputs.phone + e.target });
-  }; */
+  const resetForm = () => {
+    setFormInputs(initialFormInputs);
+    setPhoneInputState(['', '', '', '']);
+    setIsSubmitted(false);
+  };
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -68,15 +76,23 @@ export const FunctionalForm: React.FC<FormProps> = ({ setRawData }) => {
       !isFirstNameInputValid ||
       !isLastNameInputValid ||
       !validEmail ||
-      !cityNotBlank
+      !cityNotBlank ||
+      !validPhoneNumber
     ) {
       alert('bad data');
       return;
     } else {
-      setRawData(formInputs);
+      //setRawData(formInputs);
+      //setRawData({
+      setUserData({
+        ...formInputs,
+        phone: phoneInputState.join(''),
+      });
       console.log(formInputs);
-      setFormInputs(initialFormInputs);
-      setIsSubmitted(false);
+      /* setFormInputs(initialFormInputs);
+      setIsSubmitted(false); */
+      console.log(phoneInputState);
+      resetForm();
     }
   };
   return (
@@ -86,45 +102,49 @@ export const FunctionalForm: React.FC<FormProps> = ({ setRawData }) => {
       </u>
 
       {/* first name input */}
-      <div className="input-wrap">
-        <label>{'First Name'}:</label>
-        <input
-          value={formInputs.firstName}
-          placeholder="Bilbo"
-          name="firstName"
-          onChange={handleChange}
-        />
-      </div>
+      <FunctionTextInput
+        label={'First Name'}
+        inputProps={{
+          value: formInputs.firstName,
+          placeholder: 'Bilbo',
+          name: 'firstName',
+          onChange: handleChange,
+        }}
+      />
+
       <ErrorMessage
         message={firstNameErrorMessage}
         show={shouldShowFirstNameError}
       />
 
       {/* last name input */}
-      <div className="input-wrap">
-        <label>{'Last Name'}:</label>
-        <input
-          placeholder="Baggins"
-          name="lastName"
-          onChange={handleChange}
-          value={formInputs.lastName}
-        />
-      </div>
+      <FunctionTextInput
+        label={'Last Name'}
+        inputProps={{
+          value: formInputs.lastName,
+          placeholder: 'Baggins',
+          name: 'lastName',
+          onChange: handleChange,
+        }}
+      />
+
       <ErrorMessage
         message={lastNameErrorMessage}
         show={shouldShowLastNameError}
       />
 
       {/* Email Input */}
-      <div className="input-wrap">
-        <label>{'Email'}:</label>
-        <input
-          placeholder="bilbo-baggins@adventurehobbits.net"
-          name="email"
-          onChange={handleChange}
-          value={formInputs.email}
-        />
-      </div>
+
+      <FunctionTextInput
+        label={'Email'}
+        inputProps={{
+          value: formInputs.email,
+          placeholder: 'bilbo-baggins@adventurehobbits.net',
+          name: 'email',
+          onChange: handleChange,
+        }}
+      />
+
       <ErrorMessage message={emailErrorMessage} show={shouldShowEmailError} />
 
       {/* City Input */}
@@ -146,10 +166,14 @@ export const FunctionalForm: React.FC<FormProps> = ({ setRawData }) => {
       </div>
       <ErrorMessage message={cityErrorMessage} show={shouldShowCityError} />
 
-      <div className="input-wrap">
-        <label htmlFor="phone">Phone:</label>
+      <PhoneInput
+        setPhoneInputState={setPhoneInputState}
+        phoneInputState={phoneInputState}
+      />
+      {/* <div className="input-wrap">
+         <label htmlFor="phone">Phone:</label> 
         <div id="phone-input-wrap">
-          <input
+          {/* <input
             name="phone1"
             type="text"
             id="phone-input-1"
@@ -184,10 +208,12 @@ export const FunctionalForm: React.FC<FormProps> = ({ setRawData }) => {
             onChange={handleChange}
           />
         </div>
-      </div>
+      </div>*/}
 
-      <ErrorMessage message={phoneNumberErrorMessage} show={true} />
-
+      <ErrorMessage
+        message={phoneNumberErrorMessage}
+        show={shouldShowPhoneNumberError}
+      />
       <input type="submit" value="Submit" onClick={handleSubmit} />
     </form>
   );

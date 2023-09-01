@@ -1,7 +1,6 @@
 import { ProfileInformation } from '../ProfileInformation';
 import { FunctionalForm } from './FunctionalForm';
 import { useState } from 'react';
-import { PhoneInput } from './PhoneInput';
 
 export const FunctionalApp = () => {
   const [userData, setUserData] = useState({
@@ -11,23 +10,27 @@ export const FunctionalApp = () => {
     city: '',
     phone: '',
   });
-  const [rawData, setRawData] = useState({
+
+  /* const [rawData, setRawData] = useState({
     firstName: '',
     lastName: '',
     email: '',
     city: '',
-    phone1: '',
-    phone2: '',
-    phone3: '',
-    phone4: '',
-  });
+    phone: '',
+  }); */
+  let shouldSetUserDataNull = true;
+  if (Object.values(userData).every((value) => value === '')) {
+    shouldSetUserDataNull = true;
+  } else {
+    shouldSetUserDataNull = false;
+  }
 
+  console.log(userData);
   return (
     <>
       <h2>Functional</h2>
-      <ProfileInformation userData={userData} />
-      <FunctionalForm setRawData={setRawData} />
-      <PhoneInput />
+      <ProfileInformation userData={shouldSetUserDataNull ? null : userData} />
+      <FunctionalForm setUserData={setUserData} />
     </>
   );
 };
