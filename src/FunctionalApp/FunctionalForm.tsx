@@ -174,45 +174,6 @@ export const FunctionalForm: React.FC<FormProps> = ({ setUserData }) => {
         setPhoneInputState={setPhoneInputState}
         phoneInputState={phoneInputState}
       />
-      {/* <div className="input-wrap">
-         <label htmlFor="phone">Phone:</label> 
-        <div id="phone-input-wrap">
-          {/* <input
-            name="phone1"
-            type="text"
-            id="phone-input-1"
-            placeholder="55"
-            value={formInputs.phone1}
-            onChange={handleChange}
-          />
-          -
-          <input
-            name="phone2"
-            type="text"
-            id="phone-input-2"
-            placeholder="55"
-            value={formInputs.phone2}
-            onChange={handleChange}
-          />
-          -
-          <input
-            name="phone3"
-            type="text"
-            id="phone-input-3"
-            placeholder="55"
-            value={formInputs.phone3}
-            onChange={handleChange}
-          />
-          <input
-            name="phone4"
-            type="text"
-            id="phone-input-4"
-            placeholder="5"
-            value={formInputs.phone4}
-            onChange={handleChange}
-          />
-        </div>
-      </div>*/}
 
       <ErrorMessage
         message={phoneNumberErrorMessage}
