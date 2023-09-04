@@ -11,13 +11,6 @@ export const FunctionalApp = () => {
     phone: '',
   });
 
-  /* const [rawData, setRawData] = useState({
-    firstName: '',
-    lastName: '',
-    email: '',
-    city: '',
-    phone: '',
-  }); */
   let shouldSetUserDataNull = true;
   if (Object.values(userData).every((value) => value === '')) {
     shouldSetUserDataNull = true;
@@ -25,7 +18,6 @@ export const FunctionalApp = () => {
     shouldSetUserDataNull = false;
   }
 
-  console.log(userData);
   return (
     <>
       <h2>Functional</h2>

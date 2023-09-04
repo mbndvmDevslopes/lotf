@@ -54,6 +54,7 @@ export const PhoneInput: React.FC<FormProps> = ({
           value={phoneInputState[0]}
           onChange={createOnChangeHandler(0)}
           ref={ref0}
+          placeholder="55"
         />
         -
         <input
@@ -63,6 +64,7 @@ export const PhoneInput: React.FC<FormProps> = ({
           value={phoneInputState[1]}
           onChange={createOnChangeHandler(1)}
           ref={ref1}
+          placeholder="55"
         />
         -
         <input
@@ -72,6 +74,7 @@ export const PhoneInput: React.FC<FormProps> = ({
           value={phoneInputState[2]}
           onChange={createOnChangeHandler(2)}
           ref={ref2}
+          placeholder="55"
         />
         -
         <input
@@ -81,6 +84,7 @@ export const PhoneInput: React.FC<FormProps> = ({
           value={phoneInputState[3]}
           onChange={createOnChangeHandler(3)}
           ref={ref3}
+          placeholder="5"
         />
       </div>
     </div>

@@ -3,13 +3,7 @@ import { ClassForm } from './ClassForm';
 import { UserInformation } from '../types';
 import { ProfileInformation } from '../ProfileInformation';
 
-/* const defaultUser: UserInformation = {
-  email: 'default@default.com',
-  firstName: 'Default',
-  lastName: 'Default',
-  phone: '1234567',
-  city: 'Hobbiton',
-}; */
+
 type ClassAppState = {
   userData: UserInformation;
 };
@@ -35,7 +29,6 @@ export class ClassApp extends Component<Record<string, never>, ClassAppState> {
     } else {
       shouldSetNull = false;
     }
-    console.log('inapp', this.state.userData);
 
     return (
       <>
@@ -45,7 +38,6 @@ export class ClassApp extends Component<Record<string, never>, ClassAppState> {
             // toggle the following lines to change
             // null
             shouldSetNull ? null : this.state.userData
-            //null
           }
         />
         <ClassForm

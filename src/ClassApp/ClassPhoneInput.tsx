@@ -57,6 +57,7 @@ export class ClassPhoneInput extends Component<
             value={this.props.phoneInputState[0]}
             onChange={this.createOnChangeHandler(0)}
             ref={this.ref0}
+            placeholder="88"
           />
           -
           <input
@@ -66,6 +67,7 @@ export class ClassPhoneInput extends Component<
             value={this.props.phoneInputState[1]}
             onChange={this.createOnChangeHandler(1)}
             ref={this.ref1 as React.RefObject<HTMLInputElement>}
+            placeholder="88"
           />
           -
           <input
@@ -75,6 +77,7 @@ export class ClassPhoneInput extends Component<
             value={this.props.phoneInputState[2]}
             onChange={this.createOnChangeHandler(2)}
             ref={this.ref2 as React.RefObject<HTMLInputElement>}
+            placeholder="88"
           />
           -
           <input
@@ -84,6 +87,7 @@ export class ClassPhoneInput extends Component<
             value={this.props.phoneInputState[3]}
             onChange={this.createOnChangeHandler(3)}
             ref={this.ref3 as React.RefObject<HTMLInputElement>}
+            placeholder="8"
           />
         </div>
       </div>

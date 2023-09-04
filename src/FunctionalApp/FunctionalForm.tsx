@@ -15,13 +15,6 @@ const emailErrorMessage = 'Email is Invalid';
 const cityErrorMessage = 'State is Invalid';
 const phoneNumberErrorMessage = 'Invalid Phone Number';
 
-/* type UserData = {
-  firstName: string;
-  lastName: string;
-  email: string;
-  city: string;
-  phone: string;
-}; */
 
 type FormProps = {
   setUserData: React.Dispatch<React.SetStateAction<UserInformation>>;
@@ -45,8 +38,6 @@ export const FunctionalForm: React.FC<FormProps> = ({ setUserData }) => {
 
   const [formInputs, setFormInputs] = useState(initialFormInputs);
 
-  /*  const isFirstNameInputValid = isNameValid(formInputs.firstName);
-  const isLastNameInputValid = isNameValid(formInputs.lastName); */
   const [isFirstNameInputValid, isLastNameInputValid] = [
     formInputs.firstName,
     formInputs.lastName,

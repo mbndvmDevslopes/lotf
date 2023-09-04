@@ -36,7 +36,6 @@ export class ClassForm extends Component<GameBoardProps> {
   handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
 
-    // Update the input value
     this.setState({
       formInputs: {
         ...this.state.formInputs,
@@ -54,7 +53,6 @@ export class ClassForm extends Component<GameBoardProps> {
     ].map(isNameValid);
     const cityNotBlank = isCityValid(this.state.formInputs.city);
     const validEmail = isEmailValid(this.state.formInputs.email);
-    console.log(this.state.phoneInputState);
     const validPhoneNumber = isPhoneNumberValid(this.state.phoneInputState);
 
     const shouldShowFirstNameError =
@@ -65,7 +63,13 @@ export class ClassForm extends Component<GameBoardProps> {
     const shouldShowCityError = !cityNotBlank && this.state.isSubmitted;
     const shouldShowPhoneNumberError =
       !validPhoneNumber && this.state.isSubmitted;
-
+const resetForm = () => {
+  this.setState({
+    formInputs: { firstName: '', lastName: '', email: '', city: '', phone: '' },
+  });
+  this.setState({ phoneInputState: ['', '', '', ''] });
+  this.setState({ isSubmitted: false });
+};
     const updateFormData = () => {
       if (
         !isFirstNameInputValid ||
@@ -83,6 +87,8 @@ export class ClassForm extends Component<GameBoardProps> {
         };
 
         this.props.handleUpdateUserData(updatedFormInputs);
+        resetForm();
+
       }
     };
 
@@ -100,15 +106,7 @@ export class ClassForm extends Component<GameBoardProps> {
         </u>
 
         {/* first name input */}
-        {/*  <div className="input-wrap">
-          <label>{'First Name'}:</label>
-          <input
-            placeholder="Bilbo"
-            name="firstName"
-            value={this.state.formInputs.firstName}
-            onChange={this.handleInputChange}
-          />
-        </div> */}
+
         <ClassTextInput
           label={'First Name'}
           inputProps={{
@@ -132,10 +130,7 @@ export class ClassForm extends Component<GameBoardProps> {
             onChange: this.handleInputChange,
           }}
         />
-        {/* <div className="input-wrap">
-          <label>{'Last Name'}:</label>
-          <input placeholder="Baggins" />
-        </div> */}
+
         {shouldShowLastNameError && (
           <ErrorMessage message={errorMessages.lastName} show={true} />
         )}
@@ -150,19 +145,13 @@ export class ClassForm extends Component<GameBoardProps> {
             onChange: this.handleInputChange,
           }}
         />
-        {/*   <div className="input-wrap">
-          <label>{'Email'}:</label>
-          <input placeholder="bilbo-baggins@adventurehobbits.net" />
-        </div> */}
+
         {shouldShowEmailError && (
           <ErrorMessage message={errorMessages.email} show={true} />
         )}
 
         {/* City Input */}
-        {/* <div className="input-wrap">
-          <label>{'City'}:</label>
-          <input placeholder="Hobbiton" />
-        </div> */}
+
         <div className="input-wrap">
           <label>{'City'}:</label>
           <input
@@ -184,18 +173,7 @@ export class ClassForm extends Component<GameBoardProps> {
         )}
 
         <div className="input-wrap">
-          {/*  <label htmlFor="phone">Phone:</label> */}
-          {/*    <div id="phone-input-wrap">
-            <input type="text" id="phone-input-1" placeholder="55" />
-            -
-            <input type="text" id="phone-input-2" placeholder="55" />
-            -
-            <input type="text" id="phone-input-3" placeholder="55" />
-            -
-            <input type="text" id="phone-input-4" placeholder="5" />
-          </div> */}
           <ClassPhoneInput
-            /*    phoneInputState={[...this.state.phoneInputState, '', '', '']} */
             phoneInputState={this.state.phoneInputState}
             updatePhoneInputState={this.updatePhoneInputState}
           />
