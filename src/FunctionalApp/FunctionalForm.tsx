@@ -87,15 +87,11 @@ export const FunctionalForm: React.FC<FormProps> = ({ setUserData }) => {
       alert('bad data');
       return;
     } else {
-      //setRawData(formInputs);
-      //setRawData({
       setUserData({
         ...formInputs,
         phone: phoneInputState.join(''),
       });
-      console.log(formInputs);
-      /* setFormInputs(initialFormInputs);
-      setIsSubmitted(false); */
+
       resetForm();
     }
   };

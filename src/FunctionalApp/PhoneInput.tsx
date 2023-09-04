@@ -1,6 +1,5 @@
 import React, { useRef, ChangeEventHandler } from 'react';
 
-//export type PhoneInputState = [string, string, string, string];
 import { PhoneInputState } from '../types';
 
 type FormProps = {
